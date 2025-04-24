@@ -1,6 +1,8 @@
 package controller;
 
 import model.User;
+import model.request.RestRequestUpdateNumber;
+import model.response.RestResponseUpdateNumber;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,9 +37,9 @@ public class UserController {
         return ResponseEntity.ok(userService.updateUser(user));
     }
 
-    @PatchMapping(value="/patchUser/{id}/")
-    public ResponseEntity<String> patchUser(@PathVariable Long id, @RequestBody Map<String, Object> user) {
-        return ResponseEntity.ok("Test");
+    @PatchMapping(value="/updateNumber/{id}/")
+    public RestResponseUpdateNumber updateNumber(@RequestBody RestRequestUpdateNumber restRequestUpdateNumber, @PathVariable Integer id) {
+        return userService.changeNumber(restRequestUpdateNumber, id);
     }
 
     @DeleteMapping(value="/deleteUser")

@@ -1,7 +1,8 @@
 package service;
 
 import dao.IUserDao;
-import dao.UserDao;
+import model.request.RestRequestUpdateNumber;
+import model.response.RestResponseUpdateNumber;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import model.User;
@@ -52,5 +53,18 @@ public class UserService implements IUserService {
     @Override
     public User getUserById(Integer id) {
         return userDao.getUserById(id);
+    }
+
+    @Override
+    public RestResponseUpdateNumber changeNumber(RestRequestUpdateNumber restRequestUpdateNumber, Integer id) {
+        User updatedUser = userDao.getUserById(id);
+        updatedUser.setTelefono(restRequestUpdateNumber.getUpdateNumber());
+        userDao.updateUser(updatedUser);
+        return RestResponseUpdateNumber.builder()
+                .id(updatedUser.getId())
+                .nombre(updatedUser.getNombre())
+                .email(updatedUser.getEmail())
+                .telefono(updatedUser.getTelefono())
+                .build();
     }
 }
