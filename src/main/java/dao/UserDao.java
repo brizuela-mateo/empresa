@@ -3,6 +3,7 @@ package dao;
 import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import rowmapper.UserMapper;
@@ -43,7 +44,7 @@ public class UserDao implements IUserDao {
     }
 
     @Override
-    public User getUserById(Integer id){
+    public User getUserById(Integer id) throws DataAccessException {
         String sql = "SELECT * FROM usuario WHERE id = ?";
         return jdbcTemplate.queryForObject(sql, userMapper, id);
     }

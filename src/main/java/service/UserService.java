@@ -3,17 +3,23 @@ package service;
 import dao.IUserDao;
 import model.request.RestRequestUpdateNumber;
 import model.response.RestResponseUpdateNumber;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import model.User;
 
 import java.util.List;
 
 @Service
-public class UserService implements IUserService {
+public class UserService implements IUserService{
 
     @Autowired
     IUserDao userDao;
+
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Override
     public String createUser(User user) {
@@ -51,8 +57,13 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User getUserById(Integer id) {
-        return userDao.getUserById(id);
+    public User getUserById(Integer id)  {
+        try {
+            return userDao.getUserById(id);
+        } catch (EmptyResultDataAccessException e){
+            logger.error("Error en get user id: " + e.getMessage());
+        }
+        return null;
     }
 
     @Override

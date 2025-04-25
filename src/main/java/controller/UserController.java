@@ -4,6 +4,7 @@ import model.User;
 import model.request.RestRequestUpdateNumber;
 import model.response.RestResponseUpdateNumber;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import service.IUserService;
@@ -24,12 +25,20 @@ public class UserController {
 
     @GetMapping(value = "/user/{id}")
     public ResponseEntity<User> getUserById(@PathVariable("id") Integer id) {
-        return ResponseEntity.ok(userService.getUserById(id));
+        //return ResponseEntity.ok(userService.getUserById(id));
+        User user = userService.getUserById(id);
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
     }
 
     @PostMapping(value="/createUser")
     public ResponseEntity<String> createUser(@RequestBody User user) {
-        return ResponseEntity.ok(userService.createUser(user));
+        //return ResponseEntity.ok(userService.createUser(user));
+
+        return new ResponseEntity<>(userService.createUser(user), HttpStatus.CREATED);
     }
 
     @PutMapping(value="/updateUser")
