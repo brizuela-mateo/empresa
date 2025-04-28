@@ -10,4 +10,6 @@ public interface IUserDao {
     public int createUser(User user);
     public void updateUser(User user);
     public void deleteUser(Integer id);
+
+    void addReview(Integer id, Integer productId, int calification, String comentario);
 }

@@ -1,22 +1,30 @@
 package controller;
 
+import jakarta.validation.Valid;
+import model.Product;
 import model.User;
 import model.request.RestRequestUpdateNumber;
 import model.response.RestResponseUpdateNumber;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import service.IProductService;
 import service.IUserService;
 
 import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/userApi")
+//@Validated
 public class UserController {
     @Autowired
     IUserService userService;
+
+    @Autowired
+    IProductService productService;
 
     @GetMapping(value="/listUsers")
     public ResponseEntity<List<User>> listUsers() {
@@ -35,14 +43,12 @@ public class UserController {
     }
 
     @PostMapping(value="/createUser")
-    public ResponseEntity<String> createUser(@RequestBody User user) {
-        //return ResponseEntity.ok(userService.createUser(user));
-
+    public ResponseEntity<String> createUser(@Valid @RequestBody User user) {
         return new ResponseEntity<>(userService.createUser(user), HttpStatus.CREATED);
     }
 
     @PutMapping(value="/updateUser")
-    public ResponseEntity<String> updateUser(@RequestBody User user) {
+    public ResponseEntity<String> updateUser(@Valid @RequestBody User user) {
         return ResponseEntity.ok(userService.updateUser(user));
     }
 
@@ -56,5 +62,35 @@ public class UserController {
         return ResponseEntity.ok(userService.deleteUser(id));
     }
 
+    public enum Calification{
+        BAD(1),
+        MEDIUM(2),
+        GOOD(3),
+        GREAT(4);
+
+        private int value;
+
+        Calification(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+    }
+
+    @PostMapping(value = "/{id}/resenar/{productId}")
+    public ResponseEntity<String> reviewProduct(@PathVariable Integer id,
+                                                @RequestParam (required = true) Integer productId,
+                                                @RequestParam (name = "calification", required = true) Calification calification,
+                                                @RequestParam (required = false) String comentario){
+        try {
+            userService.addReview(id, productId, calification.getValue(), comentario);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+    }
 
 }

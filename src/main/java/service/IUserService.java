@@ -14,4 +14,6 @@ public interface IUserService {
     public User getUserById(Integer id);
 
     RestResponseUpdateNumber changeNumber(RestRequestUpdateNumber restRequestUpdateNumber, Integer id);
+
+    public void addReview(Integer id, Integer productId, int calification, String comentario);
 }

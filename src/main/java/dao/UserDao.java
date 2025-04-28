@@ -32,6 +32,12 @@ public class UserDao implements IUserDao {
     }
 
     @Override
+    public void addReview(Integer id, Integer productId, int calification, String comentario) {
+        String sql = "insert into resena (usuario_id, producto_id, comentario, calificacion) VALUES (?,?,?,?)";
+        jdbcTemplate.update(sql, id, productId, comentario, calification);
+    }
+
+    @Override
     public void updateUser(User user){
         String sql = "UPDATE usuario SET nombre = ?, email = ?, telefono = ? WHERE id = ?";
         jdbcTemplate.update(sql, user.getNombre(), user.getEmail(), user.getTelefono(), user.getId());

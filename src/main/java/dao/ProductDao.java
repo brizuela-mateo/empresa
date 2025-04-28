@@ -22,6 +22,10 @@ public class ProductDao implements IProductDao {
         return jdbcTemplate.query("SELECT * FROM producto", new ProductMapper() {});
     }
 
+    @Override
+    public Product getProductById(Integer productId) {
+        return jdbcTemplate.queryForObject("SELECT * FROM producto WHERE id = ?", new ProductMapper(){}, productId);
+    }
 
 
 }

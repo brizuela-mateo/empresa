@@ -1,12 +1,13 @@
 package service;
 
 import dao.IUserDao;
+import dao.ProductDao;
+import model.Product;
 import model.request.RestRequestUpdateNumber;
 import model.response.RestResponseUpdateNumber;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import model.User;
@@ -20,6 +21,8 @@ public class UserService implements IUserService{
     IUserDao userDao;
 
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+    @Autowired
+    private ProductDao productDao;
 
     @Override
     public String createUser(User user) {
@@ -77,5 +80,12 @@ public class UserService implements IUserService{
                 .email(updatedUser.getEmail())
                 .telefono(updatedUser.getTelefono())
                 .build();
+    }
+
+    @Override
+    public void addReview(Integer id, Integer productId, int calification, String comentario) {
+        User user = userDao.getUserById(id);
+        Product product = productDao.getProductById(productId);
+        userDao.addReview(user.getId(), product.getId(), calification, comentario);
     }
 }

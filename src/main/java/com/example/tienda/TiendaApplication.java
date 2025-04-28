@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 //@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 @SpringBootApplication
 //@ComponentScan(basePackages = "com.example.tienda.config")
-@ComponentScan(basePackages = {"com.example.tienda", "controller", "service", "dao", "config", "model"})
+@ComponentScan(basePackages = {"com.example.tienda", "controller", "service", "dao", "config", "model", "filter"})
 public class TiendaApplication {
 
 	public static void main(String[] args) {

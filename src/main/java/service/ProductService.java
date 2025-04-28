@@ -22,4 +22,9 @@ public class ProductService implements IProductService {
         return productBuilder.buildListResponse(productDao.getAllProducts());
     }
 
+    @Override
+    public Product getProductById(Integer productId) {
+        return productDao.getProductById(productId);
+    }
+
 }
