@@ -1,7 +1,9 @@
 package controller;
 
 import model.DetallePedido;
+import model.DetallePedidoJoin;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import service.DetallePedidoService;
@@ -18,12 +20,21 @@ public class DetallePedidoController {
     public enum Categoria {
         PREPARADO,
         ENVIADO,
-        ENTREGADO
+        ENTREGADO,
+        TODOS
     }
 
     @GetMapping(value = "/detalles")
-    public ResponseEntity<List<DetallePedido>> listarPedidosPorCategoria(@RequestParam("categoria") Categoria categoria) {
-        return ResponseEntity.ok(detallePedidoService.getDetallePedidos(String.valueOf(categoria)));
+    public ResponseEntity<List<DetallePedidoJoin>> listarPedidosPorCategoria(@RequestParam("categoria") Categoria categoria) {
+        return ResponseEntity.ok(detallePedidoService.getDetallePedidosJoin(String.valueOf(categoria)));
     }
 
+    @GetMapping(value = "/detallePedidos")
+    public ResponseEntity<List<DetallePedido>> listarPedidos() {
+        try{
+            return new ResponseEntity<List<DetallePedido>>(detallePedidoService.getDetallePedidos(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

@@ -14,7 +14,7 @@ import java.util.List;
 public class UserDao implements IUserDao {
 
     @Autowired
-    @Qualifier("jdbctemplate")
+    //@Qualifier("jdbctemplate")
     private JdbcTemplate jdbcTemplate;
 
     private final UserMapper userMapper = new UserMapper();

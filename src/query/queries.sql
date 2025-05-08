@@ -1,5 +1,7 @@
 select * from producto;
 
+select * from detalle_pedido;
+
 select * from usuario;
 
 select * from pedido pe;

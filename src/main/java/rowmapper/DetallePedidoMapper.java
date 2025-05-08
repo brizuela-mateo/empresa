@@ -1,17 +1,17 @@
 package rowmapper;
 
-import model.DetallePedido;
+import model.DetallePedidoJoin;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class DetallePedidoMapper implements RowMapper<DetallePedido> {
-    public DetallePedido mapRow(ResultSet rs, int rowNum) throws SQLException {
-        DetallePedido detallePedido = new DetallePedido();
-        detallePedido.setNombreUsuario(rs.getString("nombre_usuario"));
-        detallePedido.setEstadoPedido(rs.getString("estado_pedido"));
-        detallePedido.setNombreCategoria(rs.getString("nombre_categoria"));
-        return detallePedido;
+public class DetallePedidoMapper implements RowMapper<DetallePedidoJoin> {
+    public DetallePedidoJoin mapRow(ResultSet rs, int rowNum) throws SQLException {
+        DetallePedidoJoin detallePedidoJoin = new DetallePedidoJoin();
+        detallePedidoJoin.setNombreUsuario(rs.getString("nombre_usuario"));
+        detallePedidoJoin.setEstadoPedido(rs.getString("estado_pedido"));
+        detallePedidoJoin.setNombreCategoria(rs.getString("nombre_categoria"));
+        return detallePedidoJoin;
     }
 }

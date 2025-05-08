@@ -1,9 +1,11 @@
 package dao;
 
 import model.DetallePedido;
+import model.DetallePedidoJoin;
 
 import java.util.List;
 
 public interface IDetallePedidoDao {
-    public List<DetallePedido> obtenerDetallePedidos(String estadoPedido);
+    public List<DetallePedidoJoin> obtenerDetallePedidosJoin(String estadoPedido);
+    public List<DetallePedido> obtenerDetallePedidos();
 }

@@ -2,6 +2,7 @@ package service;
 
 import dao.IDetallePedidoDao;
 import model.DetallePedido;
+import model.DetallePedidoJoin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,12 @@ public class DetallePedidoService implements IDetallePedidoService {
     IDetallePedidoDao detallePedidoDao;
 
     @Override
-    public List<DetallePedido> getDetallePedidos(String estadoPedido) {
-        return detallePedidoDao.obtenerDetallePedidos(estadoPedido);
+    public List<DetallePedidoJoin> getDetallePedidosJoin(String estadoPedido) {
+        return detallePedidoDao.obtenerDetallePedidosJoin(estadoPedido);
+    }
+
+    @Override
+    public List<DetallePedido> getDetallePedidos() {
+        return detallePedidoDao.obtenerDetallePedidos();
     }
 }

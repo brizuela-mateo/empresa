@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Data //Serializable
 public class RestRequestUpdateNumber{
     private Integer updateNumber;
 }

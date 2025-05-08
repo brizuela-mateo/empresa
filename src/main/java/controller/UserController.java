@@ -8,6 +8,8 @@ import model.response.RestResponseUpdateNumber;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import service.IProductService;
@@ -43,18 +45,24 @@ public class UserController {
     }
 
     @PostMapping(value="/createUser")
-    public ResponseEntity<String> createUser(@Valid @RequestBody User user) {
+    public ResponseEntity<String> createUser(@Valid @RequestBody User user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            List<FieldError> errors = bindingResult.getFieldErrors();
+            StringBuilder field = new StringBuilder();
+            errors.forEach(error -> {field.append(error.getDefaultMessage()).append(",");});
+
+            /*1
+            for (FieldError error : errors) {
+                field.append(error.getField()).append(".").append(error.getDefaultMessage()).append("\n");
+            }*/
+            return new ResponseEntity<>(field.toString(), HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<>(userService.createUser(user), HttpStatus.CREATED);
     }
 
     @PutMapping(value="/updateUser")
     public ResponseEntity<String> updateUser(@Valid @RequestBody User user) {
         return ResponseEntity.ok(userService.updateUser(user));
-    }
-
-    @PatchMapping(value="/updateNumber/{id}/")
-    public RestResponseUpdateNumber updateNumber(@RequestBody RestRequestUpdateNumber restRequestUpdateNumber, @PathVariable Integer id) {
-        return userService.changeNumber(restRequestUpdateNumber, id);
     }
 
     @DeleteMapping(value="/deleteUser")
@@ -77,8 +85,8 @@ public class UserController {
         public int getValue() {
             return value;
         }
-    }
 
+    }
     @PostMapping(value = "/{id}/resenar/{productId}")
     public ResponseEntity<String> reviewProduct(@PathVariable Integer id,
                                                 @RequestParam (required = true) Integer productId,
@@ -90,7 +98,11 @@ public class UserController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
 
+    @PatchMapping(value="/updateNumber/{id}/")
+    public RestResponseUpdateNumber updateNumber(@RequestBody RestRequestUpdateNumber restRequestUpdateNumber, @PathVariable Integer id) {
+        return userService.changeNumber(restRequestUpdateNumber, id);
     }
 
 }

@@ -1,15 +1,17 @@
 package model;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class DetallePedido {
-    private String nombreUsuario;
-    private String estadoPedido;
-    private String nombreCategoria;
+    private Integer id;
+    private Integer pedido_id;
+    private Integer producto_id;
+    private int cantidad;
+    private double subtotal;
+    private String estado;
 }

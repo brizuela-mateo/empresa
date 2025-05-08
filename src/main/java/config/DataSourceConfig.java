@@ -13,7 +13,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import javax.sql.DataSource;
 
     @Configuration
-//    @ComponentScan(basePackages = "com.example.tienda.config")
     public class DataSourceConfig {
 
         @Value("${spring.datasource.url:jdbc:mysql://localhost:3306/empresa}")
@@ -46,7 +45,7 @@ import javax.sql.DataSource;
             return dataSource;
         }
 
-        @Bean(name = "jdbctemplate")
+        @Bean//(name = "jdbctemplate")
         public JdbcTemplate jdbcTemplate(@Qualifier("data") DataSource dataSource) {
             return new JdbcTemplate(dataSource);
         }

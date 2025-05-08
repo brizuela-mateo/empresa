@@ -12,7 +12,9 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import model.User;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService implements IUserService{
@@ -56,7 +58,14 @@ public class UserService implements IUserService{
 
     @Override
     public List<User> listUsers() {
-        return userDao.listUsers();
+
+        var list = userDao.listUsers();
+        return list.stream()
+                .sorted(Comparator.comparing(User::getNombre))
+                .filter(user -> user.getTelefono() != 0)
+                .filter(user -> user.getNombre().startsWith("A") )
+                .limit(5)
+                .toList();
     }
 
     @Override
@@ -77,7 +86,7 @@ public class UserService implements IUserService{
         return RestResponseUpdateNumber.builder()
                 .id(updatedUser.getId())
                 .nombre(updatedUser.getNombre())
-                .email(updatedUser.getEmail())
+                //.email(updatedUser.getEmail())
                 .telefono(updatedUser.getTelefono())
                 .build();
     }

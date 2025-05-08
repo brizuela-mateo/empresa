@@ -1,5 +1,6 @@
 package model.response;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class RestResponseUpdateNumber {
     private Integer id;
+    @JsonProperty("Nombre completo:")
     private String nombre;
-    private String email;
     private Integer telefono;
 }

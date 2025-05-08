@@ -14,7 +14,7 @@ public class ProductDao implements IProductDao {
 
 
     @Autowired
-    @Qualifier("jdbctemplate")
+    //@Qualifier("jdbctemplate")
     private JdbcTemplate jdbcTemplate;
 
     @Override
